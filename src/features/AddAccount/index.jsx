@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {
   Button, Card, Col, Form, Row,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { addAccount } from '../../store/reducers/Account';
 import './AddAccount.css';
 import BankAccount from './BankAccount';
 
@@ -13,20 +15,37 @@ const ACCOUNT_TYPES = {
   tfsa: 'TFSA',
 };
 
-function renderFormForAccountType(accountType) {
-  switch (accountType) {
-    case ACCOUNT_TYPES.chequing:
-      return <BankAccount />;
-    case ACCOUNT_TYPES.savings:
-      return <BankAccount />;
-    default:
-      return '';
-  }
-}
-
-function AddAccount() {
+export default function AddAccount() {
   const [accountName, setAccountName] = useState();
   const [accountType, setAccountType] = useState();
+  const [bankName, setBankName] = useState();
+  const [accountNumber, setAccountNumber] = useState();
+  const [currentAmount, setCurrentAmount] = useState();
+
+  const dispatch = useDispatch();
+  const saveAccount = () => {
+    dispatch(addAccount({
+      accountName,
+      accountType,
+      bankName,
+      accountNumber,
+      currentAmount
+    }));
+  }
+  const renderFormForAccountType = (accountType) => {
+    switch (accountType) {
+      case ACCOUNT_TYPES.chequing:
+      case ACCOUNT_TYPES.savings:
+
+        return <BankAccount
+          bankName={bankName} setBankName={setBankName}
+          accountNumber={accountNumber} setAccountNumber={setAccountNumber}
+          currentAmount={currentAmount} setCurrentAmount={setCurrentAmount}
+        />;
+      default:
+        return '';
+    }
+  }
   return (
     <Card>
       <Card.Body>
@@ -42,7 +61,7 @@ function AddAccount() {
             <Form.Label column sm={4}>Account Type</Form.Label>
             <Col sm={8}>
               <Form.Control as="select" custom onChange={(e) => setAccountType(e.target.value)} value={accountType}>
-                <option disabled selected>Select the type of account</option>
+                <option disabled>Select the type of account</option>
                 <option>Chequing</option>
                 <option>Savings</option>
                 <option>Credit Card</option>
@@ -52,11 +71,10 @@ function AddAccount() {
             </Col>
           </Form.Group>
           {renderFormForAccountType(accountType)}
+          <Button variant="primary" onClick={() => saveAccount()}>Save</Button>
         </Form>
-        <Button variant="primary">Save</Button>
       </Card.Body>
     </Card>
   );
 }
 
-export default AddAccount;
