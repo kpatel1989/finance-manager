@@ -1,14 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import AccountEffect from '../effects/AccountEffect';
+
+const initialState = {
+    accounts: [],
+    status: 'idle',
+    error: null
+}
+export const selectAllAccounts = state => state.accounts.accounts;
+export  const saveAccount = createAsyncThunk('accounts/saveAccount', AccountEffect.saveAccount)
 
 export const accountSlice = createSlice({
     name: 'accounts',
-    initialState: [],
+    initialState,
     reducers: {
         addAccount: (state, action) => {
-            // Redux Toolkit allows us to write "mutating" logic in reducers. It
-            // doesn't actually mutate the state because it uses the immer library,
-            // which detects changes to a "draft state" and produces a brand new
-            // immutable state based off those changes
             const account = action.payload;
             let acc = {
                 accountId: account.id,
@@ -26,9 +31,14 @@ export const accountSlice = createSlice({
                 state.splice(state.indexOf(id),1);
             }
         }
+    },
+    extraReducers: {
+        [saveAccount.fulfilled]: (state, action) => {
+            state.accounts.push(action.payload);
+        }
     }
 })
 
-export const { addAccount, removeAccount } = accountSlice.actions
+// export const {  } = accountSlice.actions;
 
 export default accountSlice.reducer

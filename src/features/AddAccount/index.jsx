@@ -3,7 +3,7 @@ import {
   Button, Card, Col, Form, Row,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addAccount } from '../../store/reducers/Account';
+import { saveAccount } from '../../store/reducers/Account';
 import './AddAccount.css';
 import BankAccount from './BankAccount';
 
@@ -23,8 +23,8 @@ export default function AddAccount() {
   const [currentAmount, setCurrentAmount] = useState();
 
   const dispatch = useDispatch();
-  const saveAccount = () => {
-    dispatch(addAccount({
+  const onSaveBtnClick = () => {
+    dispatch(saveAccount({
       accountName,
       accountType,
       bankName,
@@ -71,7 +71,7 @@ export default function AddAccount() {
             </Col>
           </Form.Group>
           {renderFormForAccountType(accountType)}
-          <Button variant="primary" onClick={() => saveAccount()}>Save</Button>
+          <Button variant="primary" onClick={() => onSaveBtnClick()}>Save</Button>
         </Form>
       </Card.Body>
     </Card>
