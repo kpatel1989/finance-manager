@@ -61,7 +61,7 @@ export default function AddAccount() {
             <Form.Label column sm={4}>Account Type</Form.Label>
             <Col sm={8}>
               <Form.Control as="select" custom onChange={(e) => setAccountType(e.target.value)} value={accountType}>
-                <option disabled>Select the type of account</option>
+                <option>Select the type of account</option>
                 <option>Chequing</option>
                 <option>Savings</option>
                 <option>Credit Card</option>

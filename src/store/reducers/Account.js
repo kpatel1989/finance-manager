@@ -7,7 +7,7 @@ const initialState = {
     error: null
 }
 export const selectAllAccounts = state => state.accounts.accounts;
-export  const saveAccount = createAsyncThunk('accounts/saveAccount', AccountEffect.saveAccount)
+export const saveAccount = createAsyncThunk('accounts/saveAccount', AccountEffect.saveAccount)
 
 export const accountSlice = createSlice({
     name: 'accounts',
@@ -34,7 +34,17 @@ export const accountSlice = createSlice({
     },
     extraReducers: {
         [saveAccount.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.error = '';
             state.accounts.push(action.payload);
+        },
+        [saveAccount.rejected]: (state, action) => {
+            state.status = 'error';
+            state.error = action.payload;
+            state.accounts = [];
+        },
+        [saveAccount.pending]: (state, action) => {
+            state.status = 'loading';
         }
     }
 })
