@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Add Account component 1`] = `
+<div
+  className="card"
+>
+  <div
+    className="card-body"
+  >
+    <div
+      className="card-title h5"
+    >
+      Add a new account
+    </div>
+    <form
+      align="left"
+      className=""
+    >
+      <div
+        className="form-group row"
+      >
+        <label
+          className="form-label col-form-label col-sm-4"
+          htmlFor="accountName"
+        >
+          Account Name
+        </label>
+        <div
+          className="col-sm-8"
+        >
+          <input
+            className="form-control"
+            id="accountName"
+            onChange={[Function]}
+            placeholder="Enter account name"
+            type="text"
+          />
+        </div>
+      </div>
+      <div
+        className="form-group row"
+      >
+        <label
+          className="form-label col-form-label col-sm-4"
+          htmlFor="accountType"
+        >
+          Account Type
+        </label>
+        <div
+          className="col-sm-8"
+        >
+          <select
+            className="custom-select"
+            id="accountType"
+            onChange={[Function]}
+          >
+            <option>
+              Select the type of account
+            </option>
+            <option>
+              Chequing
+            </option>
+            <option>
+              Savings
+            </option>
+            <option>
+              Credit Card
+            </option>
+            <option>
+              Pension
+            </option>
+            <option>
+              TFSA
+            </option>
+          </select>
+        </div>
+      </div>
+      
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>
+`;
