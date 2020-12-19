@@ -18,26 +18,26 @@ export const accountSlice = createSlice({
     reducers: {
         addAccount: (state, action) => {
             const account = action.payload;
-            let acc = {
-                id: account.id,
-                accountName: account.accountName,
-                accountType: account.accountType,
-                bankName: account.bankName,
-                currentAmount: account.currentAmount,
-                accountNumber: account.accountNumber
+            if (account.id !== null && account.id !== undefined) {
+                let acc = {
+                    id: account.id,
+                    accountName: account.accountName,
+                    accountType: account.accountType,
+                    bankName: account.bankName,
+                    currentAmount: account.currentAmount,
+                    accountNumber: account.accountNumber
+                }
+                state.accounts.push(acc);
             }
-            state.accounts.push(acc);
             return state;
         },
         removeAccount: (state, action) => {
             const id = action.payload.id;
-            console.log(action.payload);
-            const ac =  state.accounts.find(a => {
-                console.log(a.id, id, a.id === id);
-                return a.id === id
-            });
-            if (ac) {
-                state.accounts.splice(state.accounts.indexOf(ac),1);
+            if (id !== null && id !== undefined) {
+                const ac = state.accounts.find(a => a.id === id);
+                if (ac) {
+                    state.accounts.splice(state.accounts.indexOf(ac), 1);
+                }
             }
             return state;
         }
@@ -47,14 +47,17 @@ export const accountSlice = createSlice({
             state.status = 'success';
             state.error = '';
             state.accounts.push(action.payload);
+            return state;
         },
         [saveAccount.rejected]: (state, action) => {
             state.status = 'error';
             state.error = action.payload;
             state.accounts = [];
+            return state;
         },
         [saveAccount.pending]: (state, action) => {
             state.status = 'loading';
+            return state;
         }
     }
 })

@@ -40,6 +40,19 @@ describe('Accounts reducer', () => {
             error: null
         });
     });
+    it('should not add an account if the id doesnot exist to store', () => {
+        const acc = {
+            accountName: 'AccountName',
+            accountType: 'AccountType',
+            bankName: 'BankName',
+            currentAmount: 'CurrentAmount',
+            accountNumber: 'AccountNumber'
+        };
+        expect(reducer(initialAccountState, {
+            type: 'accounts/addAccount',
+            payload: acc
+        })).toEqual(initialAccountState);
+    });
     it('should add 10 accounts to store', () => {
         const acc = [];
         let lastState = initialAccountState;
@@ -65,7 +78,7 @@ describe('Accounts reducer', () => {
         });
     });
     it ('should remove an account from store', () => {
-        const acc = {
+        let acc = {
             id: 0,
             accountName: 'AccountName',
             accountType: 'AccountType',
@@ -73,19 +86,30 @@ describe('Accounts reducer', () => {
             currentAmount: 'CurrentAmount',
             accountNumber: 'AccountNumber'
         }
-        let lastState = reducer(initialAccountState, {
-            type: 'accounts/addAccount',
-            payload: acc
-        });
-        lastState = reducer(initialAccountState, {
+        let lastState = Object.assign({}, initialAccountState);
+        lastState.accounts = [acc];
+        lastState = reducer(lastState, {
             type: 'accounts/removeAccount',
             payload: acc
         });
-        expect(lastState).toEqual({
-            accounts: [],
-            status: 'idle',
-            error: null
-        })
+        expect(lastState).toEqual(initialAccountState)
+    })
+    it ('should not remove an account from store if the id doesnot exist', () => {
+        let acc = {
+            id: 0,
+            accountName: 'AccountName',
+            accountType: 'AccountType',
+            bankName: 'BankName',
+            currentAmount: 'CurrentAmount',
+            accountNumber: 'AccountNumber'
+        }
+        let lastState = Object.assign({}, initialAccountState);
+        lastState.accounts = [acc];
+        lastState = reducer(lastState, {
+            type: 'accounts/removeAccount',
+            payload: {}
+        });
+        expect(lastState).toEqual(lastState);
     })
     it('should remove 5 out of 10 accounts to store', () => {
         const acc = [];
@@ -146,7 +170,5 @@ describe('Accounts reducer', () => {
 
         store.dispatch(saveAccount(resp));
         expect(AccountEffect.saveAccount).toBeCalledTimes(1);
-
-
     })
 })
