@@ -14,7 +14,7 @@ export const saveAccount = createAsyncThunk('accounts/saveAccount', AccountEffec
 
 export const accountSlice = createSlice({
     name: 'accounts',
-    initialAccountState,
+    initialState: initialAccountState,
     reducers: {
         addAccount: (state, action) => {
             const account = action.payload;
@@ -62,6 +62,6 @@ export const accountSlice = createSlice({
     }
 })
 
-// export const {  } = accountSlice.actions;
+export const {  addAccount, removeAccount } = accountSlice.actions;
 
 export default accountSlice.reducer

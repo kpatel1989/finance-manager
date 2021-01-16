@@ -16,11 +16,11 @@ const ACCOUNT_TYPES = {
 };
 
 export default function AddAccount() {
-  const [accountName, setAccountName] = useState();
-  const [accountType, setAccountType] = useState();
-  const [bankName, setBankName] = useState();
-  const [accountNumber, setAccountNumber] = useState();
-  const [currentAmount, setCurrentAmount] = useState();
+  const [accountName, setAccountName] = useState('');
+  const [accountType, setAccountType] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [currentAmount, setCurrentAmount] = useState('');
 
   const dispatch = useDispatch();
   const onSaveBtnClick = () => {
@@ -60,13 +60,13 @@ export default function AddAccount() {
           <Form.Group as={Row} controlId="accountType">
             <Form.Label column sm={4}>Account Type</Form.Label>
             <Col sm={8}>
-              <Form.Control as="select" custom onChange={(e) => setAccountType(e.target.value)} value={accountType}>
+              <Form.Control as="select" custom data-testid="bankTypeSelector" onChange={(e) => setAccountType(e.target.value)} value={accountType}>
                 <option>Select the type of account</option>
-                <option>Chequing</option>
-                <option>Savings</option>
-                <option>Credit Card</option>
-                <option>Pension</option>
-                <option>TFSA</option>
+                <option data-testid="bankType-{ACCOUNT_TYPES.chequing}" key={ACCOUNT_TYPES.chequing} value={ACCOUNT_TYPES.chequing}>Chequing</option>
+                <option data-testid="bankType-{ACCOUNT_TYPES.savings}" key={ACCOUNT_TYPES.savings} value={ACCOUNT_TYPES.savings}>Savings</option>
+                <option data-testid="bankType-{ACCOUNT_TYPES.creditCard}" key={ACCOUNT_TYPES.creditCard} value={ACCOUNT_TYPES.creditCard}>Credit Card</option>
+                <option data-testid="bankType-{ACCOUNT_TYPES.rrsp}" key={ACCOUNT_TYPES.rrsp} value={ACCOUNT_TYPES.rrsp}>RRSP</option>
+                <option data-testid="bankType-{ACCOUNT_TYPES.tfsa}" key={ACCOUNT_TYPES.tfsa} value={ACCOUNT_TYPES.tfsa}>TFSA</option>
               </Form.Control>
             </Col>
           </Form.Group>

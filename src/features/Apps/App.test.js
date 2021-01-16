@@ -1,9 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import renderer from 'react-test-renderer';
+import App from './index';
+
+jest.mock('../Home', () => () => (<homeplaceholder />));
 
 test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const component = renderer.create(<App />, document.body);
+  expect(component.toJSON()).toMatchSnapshot();
 });

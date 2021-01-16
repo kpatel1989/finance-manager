@@ -26,8 +26,8 @@ function AccountSummary() {
             {
               accounts.map(a => {
                 return (
-                  <tr>
-                    <td>{a.accountId}</td>
+                  <tr key={a.id}>
+                    <td>{a.id}</td>
                     <td>{a.accountName}</td>
                     <td>{a.accountType}</td>
                     <td>{a.currentAmount}</td>
