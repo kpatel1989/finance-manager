@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Card, Table,
 } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectAllAccounts } from '../../store/reducers/Account';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllAccounts, accountLoadStatus, fetchAllAccounts } from '../../store/reducers/Account';
+import { ACCOUNT_TYPES } from '../../assets/consts/enums';
+
 
 function AccountSummary() {
-
+  const dispatch = useDispatch();
   const accounts = useSelector(selectAllAccounts);
+  const status = useSelector(accountLoadStatus)
+  useEffect(() => {
+    if (status === 'idle')
+      dispatch(fetchAllAccounts());
+  });
+
 
   return (
     <Card align="left">
@@ -16,7 +24,6 @@ function AccountSummary() {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>#</th>
               <th>Account Name</th>
               <th>Type</th>
               <th>Balance</th>
@@ -27,9 +34,8 @@ function AccountSummary() {
               accounts.map(a => {
                 return (
                   <tr key={a.id}>
-                    <td>{a.id}</td>
-                    <td>{a.accountName}</td>
-                    <td>{a.accountType}</td>
+                    <td>{a.accountName} </td>
+                    <td>{ACCOUNT_TYPES[a.accountType]}</td>
                     <td>{a.currentAmount}</td>
                   </tr>
                 );

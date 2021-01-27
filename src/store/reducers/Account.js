@@ -8,9 +8,12 @@ export const initialAccountState = {
 }
 // selectors
 export const selectAllAccounts = state => state.accounts.accounts;
+export const accountLoadStatus = state => state.accounts.status;
 
 // thunk actions
 export const saveAccount = createAsyncThunk('accounts/saveAccount', AccountEffect.saveAccount)
+
+export const fetchAllAccounts = createAsyncThunk('accounts/fetchAll', AccountEffect.fetchAll)
 
 export const accountSlice = createSlice({
     name: 'accounts',
@@ -56,6 +59,22 @@ export const accountSlice = createSlice({
             return state;
         },
         [saveAccount.pending]: (state, action) => {
+            state.status = 'loading';
+            return state;
+        },
+        [fetchAllAccounts.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.error = '';
+            state.accounts = state.accounts.concat(action.payload);
+            return state;
+        },
+        [fetchAllAccounts.rejected]: (state, action) => {
+            state.status = 'error';
+            state.error = action.payload;
+            state.accounts = [];
+            return state;
+        },
+        [fetchAllAccounts.pending]: (state) => {
             state.status = 'loading';
             return state;
         }

@@ -6,21 +6,16 @@ import { useDispatch } from 'react-redux';
 import { saveAccount } from '../../store/reducers/Account';
 import './AddAccount.css';
 import BankAccount from './BankAccount';
+import { ACCOUNT_TYPES } from '../../assets/consts/enums';
 
-const ACCOUNT_TYPES = {
-  chequing: 'Chequing',
-  savings: 'Savings',
-  creditCard: 'Credit Card',
-  rrsp: 'RRSP',
-  tfsa: 'TFSA',
-};
 
 export default function AddAccount() {
   const [accountName, setAccountName] = useState('');
   const [accountType, setAccountType] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [currentAmount, setCurrentAmount] = useState('');
+  const [currentAmount, setCurrentAmount] = useState(0);
+  const [personalRateOfReturn, setPersonalRateOfReturn] = useState(0);
 
   const dispatch = useDispatch();
   const onSaveBtnClick = () => {
@@ -29,14 +24,14 @@ export default function AddAccount() {
       accountType,
       bankName,
       accountNumber,
-      currentAmount
+      currentAmount,
+      personalRateOfReturn
     }));
   }
   const renderFormForAccountType = (accountType) => {
-    switch (accountType) {
-      case ACCOUNT_TYPES.chequing:
-      case ACCOUNT_TYPES.savings:
-
+    switch ((accountType)) {
+      case 1: // Chequing
+      case 2: // Savings
         return <BankAccount
           bankName={bankName} setBankName={setBankName}
           accountNumber={accountNumber} setAccountNumber={setAccountNumber}
@@ -60,13 +55,13 @@ export default function AddAccount() {
           <Form.Group as={Row} controlId="accountType">
             <Form.Label column sm={4}>Account Type</Form.Label>
             <Col sm={8}>
-              <Form.Control as="select" custom data-testid="bankTypeSelector" onChange={(e) => setAccountType(e.target.value)} value={accountType}>
+              <Form.Control as="select" custom data-testid="bankTypeSelector" onChange={(e) => setAccountType(parseInt(e.target.value))} value={accountType}>
                 <option>Select the type of account</option>
-                <option data-testid="bankType-{ACCOUNT_TYPES.chequing}" key={ACCOUNT_TYPES.chequing} value={ACCOUNT_TYPES.chequing}>Chequing</option>
-                <option data-testid="bankType-{ACCOUNT_TYPES.savings}" key={ACCOUNT_TYPES.savings} value={ACCOUNT_TYPES.savings}>Savings</option>
-                <option data-testid="bankType-{ACCOUNT_TYPES.creditCard}" key={ACCOUNT_TYPES.creditCard} value={ACCOUNT_TYPES.creditCard}>Credit Card</option>
-                <option data-testid="bankType-{ACCOUNT_TYPES.rrsp}" key={ACCOUNT_TYPES.rrsp} value={ACCOUNT_TYPES.rrsp}>RRSP</option>
-                <option data-testid="bankType-{ACCOUNT_TYPES.tfsa}" key={ACCOUNT_TYPES.tfsa} value={ACCOUNT_TYPES.tfsa}>TFSA</option>
+                {
+                  Object.keys(ACCOUNT_TYPES).map((acType) => {
+                    return (<option data-testid="bankType-{actype}" key="account-type-{acType}" value={acType}>{ACCOUNT_TYPES[acType]}</option>)
+                  })
+                }
               </Form.Control>
             </Col>
           </Form.Group>

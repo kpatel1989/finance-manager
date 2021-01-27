@@ -1,13 +1,16 @@
 import axios from "axios";
-
+import {HOST, API} from '../../assets/consts/apis';
 
 export default class AccountEffect {
     static async saveAccount(acc) {
-        // const resp = await axios.post('/fakeAPI').then(() => {
-            acc.id = !acc.id ? AccountEffect.accountCounter++ : acc.id;
-            return acc;
-        // });
-        // return resp;
+        return await axios.post(HOST + API.ACCOUNTS_API, acc).then((res) => {
+            return res.data;
+        });
     }
-    static accountCounter = 0;
+
+    static async fetchAll() {
+        return await axios.get(HOST + API.ACCOUNTS_API).then((res) => {
+            return res.data;
+        });
+    }
 }

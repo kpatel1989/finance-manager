@@ -61,32 +61,32 @@ exports[`renders the Add Account component 1`] = `
               Select the type of account
             </option>
             <option
-              data-testid="bankType-{ACCOUNT_TYPES.chequing}"
-              value="Chequing"
+              data-testid="bankType-{actype}"
+              value={1}
             >
               Chequing
             </option>
             <option
-              data-testid="bankType-{ACCOUNT_TYPES.savings}"
-              value="Savings"
+              data-testid="bankType-{actype}"
+              value={2}
             >
               Savings
             </option>
             <option
-              data-testid="bankType-{ACCOUNT_TYPES.creditCard}"
-              value="Credit Card"
+              data-testid="bankType-{actype}"
+              value={3}
             >
               Credit Card
             </option>
             <option
-              data-testid="bankType-{ACCOUNT_TYPES.rrsp}"
-              value="RRSP"
+              data-testid="bankType-{actype}"
+              value={4}
             >
               RRSP
             </option>
             <option
-              data-testid="bankType-{ACCOUNT_TYPES.tfsa}"
-              value="TFSA"
+              data-testid="bankType-{actype}"
+              value={5}
             >
               TFSA
             </option>
