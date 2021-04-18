@@ -13,8 +13,9 @@ describe('Account Effect', () => {
         };
         const output = Object.assign({} , input);
         output.id = 0;
-        axios.post.mockResolvedValue(output)
+        axios.post.mockResolvedValue({data: output})
         const res = await AccountEffect.saveAccount(input);
+        console.log(res);
         expect(res.id).not.toBeNull;
         expect(res).toEqual(output);
     })
